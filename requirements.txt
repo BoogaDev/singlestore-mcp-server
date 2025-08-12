@@ -1,0 +1,41 @@
+# Core MCP and async dependencies
+mcp>=1.0.0
+asyncio-throttle>=1.0.2
+
+# SingleStore database clients
+singlestoredb>=1.0.0
+aiomysql>=0.2.0
+pymysql>=1.1.0
+
+# Web server for remote deployment
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+sse-starlette>=2.0.0
+httpx>=0.25.0
+
+# Data validation and settings
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+
+# SQL parsing and security
+sqlparse>=0.4.4
+
+# JSON handling
+orjson>=3.9.0
+
+# Logging and monitoring
+structlog>=24.1.0
+python-json-logger>=2.0.7
+
+# Optional: Performance monitoring
+# sentry-sdk>=1.40.0
+# ddtrace>=2.5.0
+
+# Development dependencies (optional, comment out for production)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+black>=23.12.0
+mypy>=1.8.0
+ruff>=0.1.0

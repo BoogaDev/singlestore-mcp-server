@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "singlestore-mcp-server"
+version = "1.0.0"
+description = "MCP server for SingleStore database connectivity"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+    "singlestoredb>=1.0.0",  # Native SingleStore client
+    "aiomysql>=0.2.0",       # Alternative async MySQL client
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "fastapi>=0.100.0",      # For SSE endpoint
+    "uvicorn>=0.23.0",       # ASGI server
+    "sse-starlette>=1.6.0",  # SSE support
+    "sqlparse>=0.4.0",       # SQL validation
+    "asyncio-throttle>=1.0.0", # Rate limiting
+]
+
+[project.scripts]
+singlestore-mcp = "singlestore_mcp.server:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+]
