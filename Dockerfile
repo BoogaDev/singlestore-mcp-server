@@ -17,15 +17,18 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV DEPLOYMENT_MODE=remote
 
-# Copy dependency files
-COPY pyproject.toml requirements.txt ./
+# Copy dependency files first (for better caching)
+COPY requirements.txt ./
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# Copy the source code
 COPY src/ ./src/
+
+# Add the src directory to Python path
+ENV PYTHONPATH=/app/src
 
 # Create non-root user for security
 RUN useradd -m -u 1000 appuser && \
@@ -40,5 +43,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 # Expose port
 EXPOSE 8080
 
-# Run the server
+# Run the server using Python module syntax with PYTHONPATH set
 CMD ["python", "-m", "singlestore_mcp.server", "--remote"]

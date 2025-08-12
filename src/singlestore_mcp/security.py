@@ -74,9 +74,10 @@ class SecurityManager:
         """Additional SQL validation"""
         # Check for SQL injection patterns
         dangerous_patterns = [
-            "--;",
-            "/*",
-            "*/",
+            ";",  # Check for any semicolon (statement separator)
+            "--",  # SQL comment
+            "/*",  # Block comment start
+            "*/",  # Block comment end
             "xp_",
             "sp_",
             "0x",
@@ -87,6 +88,12 @@ class SecurityManager:
         ]
 
         sql_upper = sql.upper()
+        
+        # Check for semicolon anywhere except at the end
+        if ";" in sql and not sql.strip().endswith(";"):
+            return False
+        
+        # Check for dangerous patterns
         for pattern in dangerous_patterns:
             if pattern.upper() in sql_upper:
                 return False
