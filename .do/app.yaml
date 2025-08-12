@@ -1,60 +1,49 @@
-spec:
-  name: singlestore-mcp-server
-  region: nyc
-  services:
-  - name: mcp-server
-    dockerfile_path: Dockerfile
-    source_dir: /
-    github:
-      branch: main
-      deploy_on_push: true
-      repo: BoogaDev/singlestore-mcp-server
-    http_port: 8080
-    instance_count: 1
-    instance_size_slug: basic-xxs  # $4/month
-    health_check:
-      http_path: /health
-      initial_delay_seconds: 10
-      period_seconds: 30
-      timeout_seconds: 10
-      success_threshold: 1
-      failure_threshold: 3
-    envs:
-    - key: DEPLOYMENT_MODE
-      value: "remote"
-      type: SECRET
-    - key: SINGLESTORE_HOST
-      scope: RUN_TIME
-      value: "${singlestore.HOST}"
-      type: SECRET
-    - key: SINGLESTORE_PORT
-      scope: RUN_TIME
-      value: "3306"
-    - key: SINGLESTORE_USER
-      scope: RUN_TIME
-      value: "${singlestore.USERNAME}"
-      type: SECRET
-    - key: SINGLESTORE_PASSWORD
-      scope: RUN_TIME
-      value: "${singlestore.PASSWORD}"
-      type: SECRET
-    - key: SINGLESTORE_DATABASE
-      scope: RUN_TIME
-      value: "${singlestore.DATABASE}"
-      type: SECRET
-    - key: MCP_API_KEY
-      scope: RUN_TIME
-      value: "${mcp.API_KEY}"
-      type: SECRET
-    - key: PORT
-      scope: RUN_TIME
-      value: "8080"
-    alerts:
-    - rule: DEPLOYMENT_FAILED
-    - rule: DOMAIN_FAILED
-databases:
-  # Optional: Add managed database if needed
-  - name: singlestore
-    engine: MYSQL
-    production: false
-    version: "8"
+name: singlestore-mcp-server
+region: nyc
+services:
+- name: mcp-server
+  dockerfile_path: Dockerfile
+  source_dir: /
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: BoogaDev/singlestore-mcp-server
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs  # $4/month
+  health_check:
+    http_path: /health
+    initial_delay_seconds: 10
+    period_seconds: 30
+    timeout_seconds: 10
+    success_threshold: 1
+    failure_threshold: 3
+  envs:
+  - key: DEPLOYMENT_MODE
+    value: "remote"
+  - key: SINGLESTORE_HOST
+    scope: RUN_TIME
+    value: "${SINGLESTORE_HOST}"
+  - key: SINGLESTORE_PORT
+    scope: RUN_TIME
+    value: "3306"
+  - key: SINGLESTORE_USER
+    scope: RUN_TIME
+    value: "${SINGLESTORE_USER}"
+  - key: SINGLESTORE_PASSWORD
+    scope: RUN_TIME
+    value: "${SINGLESTORE_PASSWORD}"
+    type: SECRET
+  - key: SINGLESTORE_DATABASE
+    scope: RUN_TIME
+    value: "${SINGLESTORE_DATABASE}"
+  - key: MCP_API_KEY
+    scope: RUN_TIME
+    value: "${MCP_API_KEY}"
+    type: SECRET
+  - key: PORT
+    scope: RUN_TIME
+    value: "8080"
+  alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
