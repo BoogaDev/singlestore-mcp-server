@@ -1,0 +1,37 @@
+name: singlestore-mcp-server
+region: nyc
+services:
+- name: mcp-server
+  image:
+    registry_type: DOCR
+    repository: singlestore-mcp-server
+    tag: latest
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  health_check:
+    http_path: /health
+    initial_delay_seconds: 10
+    period_seconds: 30
+    timeout_seconds: 10
+    success_threshold: 1
+    failure_threshold: 3
+  envs:
+  - key: DEPLOYMENT_MODE
+    value: "remote"
+  - key: SINGLESTORE_HOST
+    value: "108.195.104.154"
+  - key: SINGLESTORE_PORT
+    value: "3306"
+  - key: SINGLESTORE_USER
+    value: "root"
+  - key: SINGLESTORE_PASSWORD
+    value: "!biA4z6JvBZafh2"
+    type: SECRET
+  - key: SINGLESTORE_DATABASE
+    value: "MLB"
+  - key: MCP_API_KEY
+    value: "992cb57cfa80606d2382296889d303755505d5a4e9eaba0cfdfe832348be8fcd"
+    type: SECRET
+  - key: PORT
+    value: "8080"
