@@ -1,5 +1,4 @@
-# Core MCP and async dependencies
-mcp>=1.0.0
+# Core async dependencies
 asyncio-throttle>=1.0.2
 
 # SingleStore database clients

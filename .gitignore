@@ -64,6 +64,7 @@ singlestore-ca-cert.pem
 
 # DigitalOcean
 .do/secrets.yaml
+.do/app-update.yaml
 deployment-config.yaml
 
 # Temporary files
